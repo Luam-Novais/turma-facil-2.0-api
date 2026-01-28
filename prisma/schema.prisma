@@ -12,3 +12,41 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+enum tipo_vinculo{
+  EXPERIMENTAL
+  MENSAL
+}
+
+model Professor{
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(50)
+  password String @db.Text
+  username String @unique @db.VarChar(50)
+}
+model Aluno{
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(255)
+  criado_em DateTime @default(now())
+  vinculo Vinculo?
+  eventos Evento_financeiro[]
+}
+
+model Vinculo{
+  id Int @id @default(autoincrement())
+  aluno Aluno @relation(fields: [aluno_id], references: [id])
+  aluno_id Int @unique
+  ativo Boolean 
+  tipo_vinculo tipo_vinculo
+  data_inicio DateTime @default(now())
+  data_fim DateTime?
+}
+
+model Evento_financeiro{
+  id Int @id @default(autoincrement())
+  tipo_evento String
+  valor Decimal 
+  aluno Aluno @relation(fields: [aluno_id], references: [id])
+  aluno_id Int 
+  pago_em DateTime
+  data_aula DateTime
+}
