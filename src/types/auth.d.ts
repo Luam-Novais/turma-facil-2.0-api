@@ -5,5 +5,5 @@ export interface CreateAccountDTO{
 }
 export interface Credentials {
   password: string;
-  identifier: string;
+  username: string;
 }

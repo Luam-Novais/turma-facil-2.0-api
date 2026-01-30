@@ -7,8 +7,8 @@ import jwt from 'jsonwebtoken';
 export class AuthService {
   constructor(private repository: AuthRepository) {}
 
-  async login({ identifier, password }: Credentials) {
-    const teacherExisting = await this.repository.findByUsername(identifier);
+  async login({ username, password }: Credentials) {
+    const teacherExisting = await this.repository.findByUsername(username);
     if (!teacherExisting) throw new HandlerError(400, 'Credenciais inválidas.');
     const passwordIsValid = await bcrypt.compare(password, teacherExisting.password);
     if (!passwordIsValid) throw new HandlerError(400, 'Credenciais inválidas.');
@@ -39,6 +39,6 @@ export class AuthService {
     }
   }
   generateToken(payload: {id: number, name: string}){
-    return jwt.sign(payload, process.env.JWT_SECRET_KEY as string)
+    return jwt.sign(payload, process.env.JWT_SECRET_KEY as string, {expiresIn: '1h'})
   }
 }

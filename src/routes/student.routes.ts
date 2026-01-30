@@ -1,0 +1,14 @@
+import { Router } from "express";
+import { ensureAuth } from "../middlewares/ensureAuth";
+import { StudentController } from "../controller/student.controller";
+
+const router = Router()
+const controller = new StudentController()
+router.post('/create', ensureAuth, (req, res, next)=> controller.create(req, res, next))
+router.put('/update', ensureAuth, (req, res, next) => controller.update(req, res, next));
+router.delete('/delete', ensureAuth, (req, res, next) => controller.delete(req, res, next));
+router.get('/get', ensureAuth, (req, res, next) => controller.get(req, res, next));
+router.get('/get-by-search', ensureAuth, (req, res, next) => controller.getBySearch(req, res, next));
+
+
+export default router

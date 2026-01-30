@@ -26,9 +26,13 @@ model Professor{
 model Aluno{
   id Int @id @default(autoincrement())
   nome String @db.VarChar(255)
-  criado_em DateTime @default(now())
-  vinculo Vinculo?
-  eventos Evento_financeiro[]
+  telefone String @db.VarChar(20)
+  cpf String @db.VarChar(20)
+  data_nascimento DateTime
+  observacoes String? @db.Text
+  criado_em DateTime @db.Date @default(now())
+  vinculo_id Vinculo?
+  pagamentos Pagamento[]
 }
 
 model Vinculo{
@@ -37,16 +41,16 @@ model Vinculo{
   aluno_id Int @unique
   ativo Boolean 
   tipo_vinculo tipo_vinculo
-  data_inicio DateTime @default(now())
+  data_inicio DateTime @db.Date @default(now())
   data_fim DateTime?
 }
 
-model Evento_financeiro{
+model Pagamento{
   id Int @id @default(autoincrement())
-  tipo_evento String
+  tipo_pag String
   valor Decimal 
   aluno Aluno @relation(fields: [aluno_id], references: [id])
   aluno_id Int 
-  pago_em DateTime
-  data_aula DateTime
+  pago_em DateTime @db.Date
+  data_aula DateTime?
 }
