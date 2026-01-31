@@ -12,45 +12,44 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-enum tipo_vinculo{
+enum subscriptionType{
   EXPERIMENTAL
   MENSAL
 }
 
-model Professor{
+model Teacher{
   id Int @id @default(autoincrement())
   name String @db.VarChar(50)
   password String @db.Text
   username String @unique @db.VarChar(50)
 }
-model Aluno{
+model Student{
   id Int @id @default(autoincrement())
-  nome String @db.VarChar(255)
-  telefone String @db.VarChar(20)
+  name String @db.VarChar(255)
+  phone String @db.VarChar(20)
   cpf String @db.VarChar(20)
-  data_nascimento DateTime
-  observacoes String? @db.Text
-  criado_em DateTime @db.Date @default(now())
-  vinculo_id Vinculo?
-  pagamentos Pagamento[]
+  date_birth DateTime
+  observations String? @db.Text
+  created_at DateTime @db.Date @default(now())
+  subscription Subscription?
+  payments Payment[]
 }
 
-model Vinculo{
+model Subscription{
   id Int @id @default(autoincrement())
-  aluno Aluno @relation(fields: [aluno_id], references: [id])
-  aluno_id Int @unique
-  ativo Boolean 
-  tipo_vinculo tipo_vinculo
-  data_inicio DateTime @db.Date @default(now())
-  data_fim DateTime?
+  student Student @relation(fields: [student_id], references: [id])
+  student_id Int @unique
+  isActive Boolean 
+  subscription_type subscriptionType
+  start_date DateTime @db.Date @default(now())
+  end_date DateTime?
 }
 
-model Pagamento{
+model Payment{
   id Int @id @default(autoincrement())
-  tipo_pag String
-  valor Decimal 
-  aluno Aluno @relation(fields: [aluno_id], references: [id])
-  aluno_id Int 
-  pago_em DateTime @db.Date
-  data_aula DateTime?
+  payment_type String
+  value Decimal 
+  student Student @relation(fields: [student_id], references: [id])
+  student_id Int 
+  payment_date DateTime @db.Date
 }

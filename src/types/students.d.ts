@@ -1,22 +1,22 @@
 import { Vinculo } from "../generated/prisma/client";
 export interface CreateStudentDTO {
-  nome: string;
-  telefone: string;
+  name: string;
+  phone: string;
   cpf: string;
-  data_nascimento: Date;
-  observacoes?: string;
-  tipo_vinculo: Tipo_vinculo
+  date_birth: Date;
+  observations?: string;
+  subscription_type: SubscriptionType
 }
-type Tipo_vinculo = 'EXPERIMENTAL' | 'MENSAL';
+type SubscriptionType = 'EXPERIMENTAL' | 'MENSAL';
 
 export interface UpdateStudentDTO {
   id: number;
-  nome?: string;
-  telefone?: string;
+  name?: string;
+  phone?: string;
   cpf?: string;
-  data_nascimento?: Date;
-  observacoes?: string;
-  tipo_vinculo?: Tipo_vinculo;
+  date_birth?: Date;
+  observations?: string;
+  subscription_type?: SubscriptionType;
 }
 // export interface Vinculo {
 //   id: Number;

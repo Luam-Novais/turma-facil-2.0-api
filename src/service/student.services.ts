@@ -6,12 +6,12 @@ export class StudentService {
   constructor(private repository: StudentRepository) {}
   async create(data: CreateStudentDTO) {
     try {
-      if (data.nome.length === 0 || data.telefone.length === 0 || data.cpf.length === 0) {
+      if (data.name.length === 0 || data.phone.length === 0 || data.cpf.length === 0) {
         throw new HandlerError(400, 'Não pode conter campos vazios.');
       }
       const studentData = {
         ...data,
-        data_nascimento: new Date(data.data_nascimento),
+        data_nascimento: new Date(data.date_birth),
       };
       const createdStudent = await this.repository.create(studentData);
       if (createdStudent instanceof Error) throw new HandlerError(400, createdStudent.message);
