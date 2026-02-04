@@ -18,6 +18,8 @@ export class AuthService {
     return {token}
   }
   async createAccount({ name, password, username }: CreateAccountDTO) {
+    const teacherExists = await this.repository.find()
+    if(teacherExists) throw new HandlerError(400, "Esse sistema serve para apenas um usuário, e já está em uso.")
     try {
       const hashPassword = await bcrypt.hash(password, 10);
       const data: CreateAccountDTO = {
@@ -34,6 +36,7 @@ export class AuthService {
       const token = this.generateToken(payload);
       return { token };
     } catch (error: any) {
+      console.error(error.message)
       error.message = 'Falha ao criar conta, nome de usuário já está em uso.';
       return error;
     }

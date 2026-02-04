@@ -11,7 +11,7 @@ export class StudentService {
       }
       const studentData = {
         ...data,
-        data_nascimento: new Date(data.date_birth),
+        date_birth: new Date(data.date_birth),
       };
       const createdStudent = await this.repository.create(studentData);
       if (createdStudent instanceof Error) throw new HandlerError(400, createdStudent.message);
@@ -37,7 +37,7 @@ export class StudentService {
   async delete(studentId: number) {
     try {
       const deleted = await this.repository.delete(studentId);
-      if(deleted instanceof Error) throw new HandlerError(400, deleted.message)
+      if (deleted instanceof Error) throw new HandlerError(400, deleted.message);
     } catch (error: any) {
       console.error(error.message);
       throw error;
@@ -51,15 +51,15 @@ export class StudentService {
       throw error;
     }
   }
-  async getBySearchName(searchName: string){
+  async getBySearchName(searchName: string) {
     try {
-        const findeds = await this.repository.getBySearch(searchName);
-        if(findeds instanceof Error) throw new HandlerError(400, findeds.message)
-        if(!findeds) throw new HandlerError(400, "Nenhum registro foi encontrado.");
-        return findeds
-    } catch (error:any) {
-        console.error(error.message)
-        throw error
+      const findeds = await this.repository.getBySearch(searchName);
+      if (findeds instanceof Error) throw new HandlerError(400, findeds.message);
+      if (!findeds) throw new HandlerError(400, 'Nenhum registro foi encontrado.');
+      return findeds;
+    } catch (error: any) {
+      console.error(error.message);
+      throw error;
     }
   }
 }

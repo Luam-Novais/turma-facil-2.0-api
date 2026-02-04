@@ -2,10 +2,13 @@ import { prisma } from '../config/prisma';
 import { CreateAccountDTO } from '../types/auth';
 
 export class AuthRepository {
-  async findByUsername(identifier: string){
-    return await prisma.professor.findUnique({where: {username: identifier}})
+  async find() {
+    return await prisma.teacher.findFirst();
+  }
+  async findByUsername(identifier: string) {
+    return await prisma.teacher.findUnique({ where: { username: identifier } });
   }
   async createAccount(data: CreateAccountDTO) {
-    return await prisma.professor.create({ data: { ...data } });
+    return await prisma.teacher.create({ data: { ...data } });
   }
 }
