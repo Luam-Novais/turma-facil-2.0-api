@@ -47,9 +47,10 @@ model Subscription{
 
 model Payment{
   id Int @id @default(autoincrement())
-  payment_type String
-  value Decimal 
+  payment_method String
+  value Decimal @db.Decimal(10, 2)
+  payment_reason String @db.VarChar(50)
   student Student @relation(fields: [student_id], references: [id])
-  student_id Int 
-  payment_date DateTime @db.Date
+  student_id Int @db.Integer
+  payment_date DateTime 
 }
