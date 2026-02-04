@@ -8,6 +8,6 @@ export class HandlerError extends Error{
 }
 
 export function errorMiddleware(error: HandlerError, req : Request, res: Response, next: NextFunction){
-    console.error(error.message)
-    res.status(error.status).json({messageError: error.message})
+    console.error(error.message, error.status)
+    res.status(error.status || 400).json({messageError: error.message})
 }
