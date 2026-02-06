@@ -16,3 +16,10 @@ export interface CreatePaymentDTO {
   payment_date: string,
   payment_reason: PaymentReason
 }
+export interface TableBodyPayment {
+  name: string;
+  data: string;
+  forma: string;
+  valor: string;
+  reason: string;
+}
