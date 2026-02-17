@@ -1,9 +1,9 @@
 export interface CreateAccountDTO{
     name: string
     password: string
-    username: string
+    identifier: string
 }
 export interface Credentials {
   password: string;
-  username: string;
+  identifier: string;
 }

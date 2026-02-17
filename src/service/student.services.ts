@@ -2,6 +2,7 @@ import { HandlerError } from '../middlewares/handlerError';
 import { StudentRepository } from '../repository/student.repository';
 import { CreateStudentDTO, UpdateStudentDTO } from '../types/students';
 
+const subscriptionTypes = ['EXPERIMENTAL', 'MENSAL_1X', 'MENSAL_2X'];
 export class StudentService {
   constructor(private repository: StudentRepository) {}
   async create(data: CreateStudentDTO) {
@@ -23,14 +24,44 @@ export class StudentService {
   async update(data: UpdateStudentDTO, studentId: number) {
     try {
       const studentExisting = await this.repository.findById(studentId);
-      const updated = await this.repository.update(data, studentId);
-      if (updated instanceof Error) throw new HandlerError(400, updated.message);
+      if (!studentExisting) throw new HandlerError(404, 'Aluno não encontrado.');
+      const subsData = { subscription_type: !data.subscription_type ? undefined : data.subscription_type};
+       const formatData = { ...data, subscription_type: undefined };
+       Object.entries(data).forEach(([key, value]) => {
+         const typedKey = key as keyof UpdateStudentDTO;
+         if (value === '' || value === null) {
+           formatData[typedKey] = undefined;
+         }
+       });
+
+        formatData.date_birth = data.date_birth ? new Date(data.date_birth) : undefined
+      await this.repository.update(formatData, subsData, studentId);
     } catch (error: any) {
       console.error(error.message);
-      if ((error.code = 'P2025')) {
-        error.message = 'Aluno não encontrado.';
-        throw new HandlerError(404, error.message);
+      throw error;
+    }
+  }
+  async handleStatusStudent(id: number, status:boolean) {
+    try {
+      const studentExisting = await this.repository.findById(id);
+      if (!studentExisting) throw new HandlerError(404, 'Aluno não encontrado.');
+      if(status){
+        return this.repository.activeStudent(id)
+      }else{
+        return this.repository.desactiveStudent(id)
       }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  async desactiveStudent(id: number) {
+    try {
+      const studentExisting = await this.repository.findById(id);
+      if (!studentExisting) throw new HandlerError(404, 'Aluno não encontrado.');
+      return await this.repository.desactiveStudent(id);
+    } catch (error) {
+      console.error(error);
       throw error;
     }
   }

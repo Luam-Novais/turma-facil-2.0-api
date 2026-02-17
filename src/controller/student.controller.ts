@@ -22,8 +22,19 @@ export class StudentController {
       const { id } = req.query;
       if (!id) throw new HandlerError(400, 'query params de id não foi enviado.');
       const data = req.body;
-      await service.update(data, Number(id));
+      await service.update(data, +id);
       res.status(200).json({ message: 'Aluno editado com sucesso.' });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async handleStatusStudent(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.query;
+      const {status} = req.body
+      if (!id) throw new HandlerError(400, 'query params de id não foi enviado.');
+        await service.handleStatusStudent(+id, status as boolean);
+      res.status(200).json({ message: `Cadastro de aluno ${status ? 'ativado' : 'desativado'}.` });
     } catch (error) {
       next(error);
     }
@@ -39,9 +50,9 @@ export class StudentController {
   async getBySearch(req: Request, res: Response, next: NextFunction) {
     try {
       const { searchName } = req.query;
-      if (!searchName) throw new HandlerError(400, 'query params para pesquisa não foi enviado.');
-      const findeds = await service.getBySearchName(searchName.toString())
-      res.status(200).json(findeds)
+      if (!searchName || searchName == undefined) throw new HandlerError(400, 'query params para pesquisa não foi enviado.');
+      const findeds = await service.getBySearchName(searchName.toString());
+      res.status(200).json(findeds);
     } catch (error) {
       next(error);
     }

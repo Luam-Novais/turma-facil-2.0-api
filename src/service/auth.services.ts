@@ -7,8 +7,8 @@ import jwt from 'jsonwebtoken';
 export class AuthService {
   constructor(private repository: AuthRepository) {}
 
-  async login({ username, password }: Credentials) {
-    const teacherExisting = await this.repository.findByUsername(username);
+  async login({ identifier, password }: Credentials) {
+    const teacherExisting = await this.repository.findByIdentifier(identifier);
     if (!teacherExisting) throw new HandlerError(400, 'Credenciais inválidas.');
     const passwordIsValid = await bcrypt.compare(password, teacherExisting.password);
     if (!passwordIsValid) throw new HandlerError(400, 'Credenciais inválidas.');
@@ -17,7 +17,7 @@ export class AuthService {
 
     return {token}
   }
-  async createAccount({ name, password, username }: CreateAccountDTO) {
+  async createAccount({ name, password, identifier }: CreateAccountDTO) {
     const teacherExists = await this.repository.find()
     if(teacherExists) throw new HandlerError(400, "Esse sistema serve para apenas um usuário, e já está em uso.")
     try {
@@ -25,7 +25,7 @@ export class AuthService {
       const data: CreateAccountDTO = {
         name: name.toLocaleLowerCase().trim(),
         password: hashPassword,
-        username: username,
+        identifier: identifier,
       };
       const created = await this.repository.createAccount(data);
 

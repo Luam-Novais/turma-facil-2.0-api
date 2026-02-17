@@ -7,12 +7,9 @@ const PdfPrinterModule = require('pdfmake/src/printer.js');
 const PdfPrinter = PdfPrinterModule.default ?? PdfPrinterModule;
 
 const fonts = {
-  Roboto: {
-    normal: path.resolve('src/fonts/Roboto-Thin.ttf'),
-    bold: path.resolve('src/fonts/Roboto-SemiBold.ttf'),
-    medium: path.resolve('src/fonts/Roboto-Medium.ttf'),
-    italics: path.resolve('src/fonts/Roboto-ExtraBoldItalic.ttf'),
-    bolditalics: path.resolve('src/fonts/Roboto-ExtraBoldItalic.ttf'),
+  RobotoMedium: {
+    normal: path.resolve('src/fonts/Roboto-Medium.ttf'),
+    bold: path.resolve('src/fonts/Roboto-ExtraBold.ttf'),
   },
 };
 
@@ -46,7 +43,7 @@ export async function generateReportPayment(data: TableBodyPayment[]) {
     ];
 
     data.forEach((payment) => {
-      tableBody.push([{ text: payment.name, }, { text: payment.data }, { text: payment.forma }, { text: payment.reason }, { text: `R$${payment.value}`, alignment: 'right', style: 'tableData' }]);
+      tableBody.push([{ text: payment.name }, { text: payment.data }, { text: payment.forma }, { text: payment.reason }, { text: `R$${payment.value}`, alignment: 'right', style: 'tableData' }]);
     });
 
     const docDefinition = {
@@ -61,7 +58,7 @@ export async function generateReportPayment(data: TableBodyPayment[]) {
           text: `${currentPage}/${pageCount}`,
           alignment: 'right',
           margin: [0, 0, 40, 20],
-          fontSize: 9,
+          fontSize: 14,
         };
       },
       content: [
@@ -70,30 +67,33 @@ export async function generateReportPayment(data: TableBodyPayment[]) {
             widths: ['*', 90, 80, '*', 70],
             body: tableBody,
           },
-          layout: 'lightHorizontalLines',
+          layout: 'lightHorizontalLines'
         },
         {
-          text: [{ text: `Total faturado -- R$ ${total.toFixed(2)} `, bold: true }],
+          text: [{ text: `Total faturado --- R$ ${total.toFixed(2)} `, bold: true}],
           margin: [0, 10, 0, 0],
         },
       ],
       styles: {
+        medium: { font: 'RobotoMedium' },
+        normal: { font: 'Roboto' },
+        bold: { font: 'RobotoBold' },
+        boldItalic: { font: 'RobotoBoldItalic' },
         header: {
           fontSize: 16,
-          bold: true,
         },
         tableHeader: {
-          bold: true,
-          fontSize: 12,
+         bold:true,
+          fontSize: 13,
         },
         tableData: {
-          bold: true,
-          fontWeight: 'medium',
+          style: 'medium',
           fontSize: 10,
+          margin: [0,10,0,10]
         },
       },
       defaultStyle: {
-        font: 'Roboto',
+        font: 'RobotoMedium',
       },
     };
 

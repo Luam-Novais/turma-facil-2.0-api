@@ -14,21 +14,22 @@ datasource db {
 }
 enum subscriptionType{
   EXPERIMENTAL
-  MENSAL
+  MENSAL_1X
+  MENSAL_2X
 }
 
 model Teacher{
   id Int @id @default(autoincrement())
   name String @db.VarChar(50)
   password String @db.Text
-  username String @unique @db.VarChar(50)
+  identifier String @unique @db.VarChar(50)
 }
 model Student{
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
   phone String @db.VarChar(20)
   cpf String @db.VarChar(20)
-  date_birth DateTime
+  date_birth DateTime 
   observations String? @db.Text
   created_at DateTime @db.Date @default(now())
   subscription Subscription?
