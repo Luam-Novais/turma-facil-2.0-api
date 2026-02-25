@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const require = createRequire(import.meta.url);
 
-const PdfPrinterModule = require('pdfmake');
+const PdfPrinterModule = require('pdfmake/src/printer');
 const PdfPrinter = PdfPrinterModule.default || PdfPrinterModule;
 
 const fonts = {
@@ -67,10 +67,10 @@ export async function generateReportPayment(data: TableBodyPayment[]) {
             widths: ['*', 90, 80, '*', 70],
             body: tableBody,
           },
-          layout: 'lightHorizontalLines'
+          layout: 'lightHorizontalLines',
         },
         {
-          text: [{ text: `Total faturado --- R$ ${total.toFixed(2)} `, bold: true}],
+          text: [{ text: `Total faturado --- R$ ${total.toFixed(2)} `, bold: true }],
           margin: [0, 10, 0, 0],
         },
       ],
@@ -83,13 +83,13 @@ export async function generateReportPayment(data: TableBodyPayment[]) {
           fontSize: 16,
         },
         tableHeader: {
-         bold:true,
+          bold: true,
           fontSize: 13,
         },
         tableData: {
           style: 'medium',
           fontSize: 10,
-          margin: [0,10,0,10]
+          margin: [0, 10, 0, 10],
         },
       },
       defaultStyle: {
