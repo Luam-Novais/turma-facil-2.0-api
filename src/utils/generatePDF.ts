@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const require = createRequire(import.meta.url);
 
-const PdfPrinterModule = require('pdfmake/src/printer.js');
+const PdfPrinterModule = require('pdfmake');
 const PdfPrinter = PdfPrinterModule.default ?? PdfPrinterModule;
 
 const fonts = {
