@@ -21,6 +21,8 @@ export class AuthController {
   }
   async createAccount(req: Request<{}, {}, CreateAccountDTO>, res: Response, next: NextFunction) {
     try {
+      const existUser = await repository.find()
+      if(existUser) throw new HandlerError(400, 'Esse sistema só pode ser usado por um usuário.')
       const { name, password, identifier } = req.body;
       if (!name || name.length === 0 || !password || password.length === 0 || !identifier || identifier.length === 0) {
         throw new HandlerError(400, 'Dados necessários não enviados.');
