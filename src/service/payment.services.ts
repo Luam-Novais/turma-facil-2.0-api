@@ -12,6 +12,8 @@ export class PaymentService {
     try {
       if (new Date(data.payment_date) > new Date()) throw new HandlerError(400, 'A data de pagamento não pode ser maior que a data atual.');
       const studentExisting = await studentRepository.findById(+data.student_id);
+      console.log(data.payment_reason)
+      console.log(mapOfPaymentReasons[data.payment_reason]);
       if (!data.payment_method || !data.payment_date || !mapOfPaymentReasons[data.payment_reason] || !studentExisting) {
         throw new HandlerError(404, 'Ocorreu um erro com os dados enviados, por favor os verifique.');
       }

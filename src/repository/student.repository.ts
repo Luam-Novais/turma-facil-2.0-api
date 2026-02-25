@@ -53,6 +53,7 @@ export class StudentRepository {
     return prisma.subscription.update({
       where: {
         student_id: id,
+        
       },
       data: {
         isActive: true,

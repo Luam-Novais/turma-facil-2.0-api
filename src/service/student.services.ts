@@ -25,16 +25,17 @@ export class StudentService {
     try {
       const studentExisting = await this.repository.findById(studentId);
       if (!studentExisting) throw new HandlerError(404, 'Aluno não encontrado.');
-      const subsData = { subscription_type: !data.subscription_type ? undefined : data.subscription_type};
+      const subsData = { subscription_type: !subscriptionTypes.includes(data.subscription_type as string) ? undefined : data.subscription_type};
        const formatData = { ...data, subscription_type: undefined };
        Object.entries(data).forEach(([key, value]) => {
          const typedKey = key as keyof UpdateStudentDTO;
-         if (value === '' || value === null) {
+         if (value === '' || value === null || value === 'undefined') {
            formatData[typedKey] = undefined;
          }
        });
 
         formatData.date_birth = data.date_birth ? new Date(data.date_birth) : undefined
+        console.log(formatData)
       await this.repository.update(formatData, subsData, studentId);
     } catch (error: any) {
       console.error(error.message);
@@ -50,16 +51,6 @@ export class StudentService {
       }else{
         return this.repository.desactiveStudent(id)
       }
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-  async desactiveStudent(id: number) {
-    try {
-      const studentExisting = await this.repository.findById(id);
-      if (!studentExisting) throw new HandlerError(404, 'Aluno não encontrado.');
-      return await this.repository.desactiveStudent(id);
     } catch (error) {
       console.error(error);
       throw error;

@@ -38,7 +38,7 @@ model Student{
 
 model Subscription{
   id Int @id @default(autoincrement())
-  student Student @relation(fields: [student_id], references: [id])
+  student Student @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   student_id Int @unique
   isActive Boolean 
   subscription_type subscriptionType
@@ -51,7 +51,7 @@ model Payment{
   payment_method String
   value Decimal @db.Decimal(10, 2)
   payment_reason String @db.VarChar(50)
-  student Student @relation(fields: [student_id], references: [id])
+  student Student @relation(fields: [student_id], references: [id], onDelete: SetNull)
   student_id Int @db.Integer
   payment_date DateTime 
 }

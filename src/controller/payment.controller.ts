@@ -12,6 +12,7 @@ export class PaymentController {
       await service.create(req.body);
       res.status(201).json({ message: 'Registro de pagamento criado com sucesso.' });
     } catch (error) {
+      console.error(error)
       next(error);
     }
   }

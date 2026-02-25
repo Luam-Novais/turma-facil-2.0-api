@@ -1,6 +1,6 @@
 import { Payment } from '../types/payment';
 import { prisma } from '../config/prisma';
-export class PaymentRepository {
+export class   PaymentRepository {
   async create(data: Payment) {
     return await prisma.payment.create({
       data: {
@@ -9,7 +9,17 @@ export class PaymentRepository {
     });
   }
   async getPayments(){
-    return await prisma.payment.findMany({include:{student:{}}})
+    return await prisma.payment.findMany({
+      include:{
+        student:{
+          select:{
+            name: true,
+            id: true,
+            phone:true
+          }
+        }
+      }
+    })
   }
   async getPaymentsByPeriod(initialDate:Date){
     return await prisma.payment.findMany({
@@ -18,18 +28,36 @@ export class PaymentRepository {
           gte: initialDate,
           lt: new Date()
         }
+      },
+      include:{
+        student:{
+          select:{
+            name: true,
+            id: true,
+            phone:true
+          }
+        }
       }
     })
 
   }
   async getCurrentMonthPayments(initialDate:Date, finalDate:Date){
     return await prisma.payment.findMany({
-      where:{
-        payment_date:{
+      where: {
+        payment_date: {
           gte: initialDate,
-          lt: finalDate
-        }
-      }
-    })
+          lt: finalDate,
+        },
+      },
+      include: {
+        student: {
+          select: {
+            name: true,
+            id: true,
+            phone: true,
+          },
+        },
+      },
+    });
   }
 }
