@@ -1,5 +1,5 @@
-import { prisma } from '../config/prisma';
-import { CreateAccountDTO } from '../types/auth';
+import { prisma } from '../config/prisma.js';
+import { CreateAccountDTO } from '../types/auth.js';
 
 export class AuthRepository {
   async find() {

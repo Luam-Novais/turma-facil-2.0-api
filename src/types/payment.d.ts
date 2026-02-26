@@ -1,5 +1,5 @@
 import { Decimal } from "@prisma/client/runtime/client"
-import { mapOfPaymentReasons } from "../utils/mapOfPaymentReason"
+import { mapOfPaymentReasons } from "../utils/mapOfPaymentReason.js"
 
 export interface Payment{
     id?: number

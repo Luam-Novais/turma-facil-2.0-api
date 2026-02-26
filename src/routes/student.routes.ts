@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { ensureAuth } from "../middlewares/ensureAuth";
-import { StudentController } from "../controller/student.controller";
+import { ensureAuth } from "../middlewares/ensureAuth.js";
+import { StudentController } from "../controller/student.controller.js";
 
 const router = Router()
 const controller = new StudentController()

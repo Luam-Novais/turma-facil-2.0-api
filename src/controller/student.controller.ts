@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express-serve-static-core';
-import { CreateStudentDTO, UpdateStudentDTO } from '../types/students';
-import { StudentService } from '../service/student.services';
-import { StudentRepository } from '../repository/student.repository';
-import { HandlerError } from '../middlewares/handlerError';
+import { CreateStudentDTO, UpdateStudentDTO } from '../types/students.js';
+import { StudentService } from '../service/student.services.js';
+import { StudentRepository } from '../repository/student.repository.js';
+import { HandlerError } from '../middlewares/handlerError.js';
 
 const repository = new StudentRepository();
 const service = new StudentService(repository);

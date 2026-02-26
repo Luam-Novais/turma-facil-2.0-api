@@ -1,6 +1,6 @@
-import { HandlerError } from '../middlewares/handlerError';
-import { AuthRepository } from '../repository/auth.repository';
-import { CreateAccountDTO, Credentials } from '../types/auth';
+import { HandlerError } from '../middlewares/handlerError.js';
+import { AuthRepository } from '../repository/auth.repository.js';
+import { CreateAccountDTO, Credentials } from '../types/auth.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 

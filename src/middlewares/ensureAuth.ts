@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { HandlerError } from './handlerError';
+import { HandlerError } from './handlerError.js';
 import jwt from 'jsonwebtoken';
 
 export function ensureAuth(req: Request, res: Response, next: NextFunction) {

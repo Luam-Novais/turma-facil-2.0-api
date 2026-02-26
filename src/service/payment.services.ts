@@ -1,9 +1,9 @@
-import { prisma } from '../config/prisma';
-import { HandlerError } from '../middlewares/handlerError';
-import { PaymentRepository } from '../repository/payment.repository';
-import { StudentRepository } from '../repository/student.repository';
-import { CreatePaymentDTO, Payment } from '../types/payment';
-import { mapOfPaymentReasons } from '../utils/mapOfPaymentReason';
+import { prisma } from '../config/prisma.js';
+import { HandlerError } from '../middlewares/handlerError.js';
+import { PaymentRepository } from '../repository/payment.repository.js';
+import { StudentRepository } from '../repository/student.repository.js';
+import { CreatePaymentDTO, Payment } from '../types/payment.js';
+import { mapOfPaymentReasons } from '../utils/mapOfPaymentReason.js';
 
 const studentRepository = new StudentRepository();
 export class PaymentService {
@@ -12,8 +12,6 @@ export class PaymentService {
     try {
       if (new Date(data.payment_date) > new Date()) throw new HandlerError(400, 'A data de pagamento não pode ser maior que a data atual.');
       const studentExisting = await studentRepository.findById(+data.student_id);
-      console.log(data.payment_reason)
-      console.log(mapOfPaymentReasons[data.payment_reason]);
       if (!data.payment_method || !data.payment_date || !mapOfPaymentReasons[data.payment_reason] || !studentExisting) {
         throw new HandlerError(404, 'Ocorreu um erro com os dados enviados, por favor os verifique.');
       }

@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
-import { HandlerError } from '../middlewares/handlerError';
-import { CreateAccountDTO, Credentials } from '../types/auth';
-import { AuthService } from '../service/auth.services';
-import { AuthRepository } from '../repository/auth.repository';
-import { configAccessToken } from '../utils/configCookies';
+import { HandlerError } from '../middlewares/handlerError.js';
+import { CreateAccountDTO, Credentials } from '../types/auth.js';
+import { AuthService } from '../service/auth.services.js';
+import { AuthRepository } from '../repository/auth.repository.js';
+import { configAccessToken } from '../utils/configCookies.js';
 
 const repository = new AuthRepository();
 const service = new AuthService(repository);

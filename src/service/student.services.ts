@@ -1,6 +1,6 @@
-import { HandlerError } from '../middlewares/handlerError';
-import { StudentRepository } from '../repository/student.repository';
-import { CreateStudentDTO, UpdateStudentDTO } from '../types/students';
+import { HandlerError } from '../middlewares/handlerError.js';
+import { StudentRepository } from '../repository/student.repository.js';
+import { CreateStudentDTO, UpdateStudentDTO } from '../types/students.js';
 
 const subscriptionTypes = ['EXPERIMENTAL', 'MENSAL_1X', 'MENSAL_2X'];
 export class StudentService {

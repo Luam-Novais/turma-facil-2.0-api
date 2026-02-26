@@ -1,6 +1,6 @@
-import { prisma } from '../config/prisma';
+import { prisma } from '../config/prisma.js';
 
-import { CreateStudentDTO, SubscriptionType, UpdateStudentDTO } from '../types/students';
+import { CreateStudentDTO, SubscriptionType, UpdateStudentDTO } from '../types/students.js';
 
 export class StudentRepository {
   async findById(id: number) {

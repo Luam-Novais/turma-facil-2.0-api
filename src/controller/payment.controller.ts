@@ -1,8 +1,8 @@
-import { PaymentService } from '../service/payment.services';
-import { PaymentRepository } from '../repository/payment.repository';
+import { PaymentService } from '../service/payment.services.js';
+import { PaymentRepository } from '../repository/payment.repository.js';
 import { Request, Response, NextFunction } from 'express-serve-static-core';
-import { CreatePaymentDTO } from '../types/payment';
-import { HandlerError } from '../middlewares/handlerError';
+import { CreatePaymentDTO } from '../types/payment.js';
+import { HandlerError } from '../middlewares/handlerError.js';
 
 const repository = new PaymentRepository();
 const service = new PaymentService(repository);

@@ -1,5 +1,5 @@
-import { Payment } from '../types/payment';
-import { prisma } from '../config/prisma';
+import { Payment } from '../types/payment.js';
+import { prisma } from '../config/prisma.js';
 export class   PaymentRepository {
   async create(data: Payment) {
     return await prisma.payment.create({
