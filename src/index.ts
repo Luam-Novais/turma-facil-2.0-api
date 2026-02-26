@@ -11,7 +11,7 @@ const app = express()
 
 app.use(
   cors({
-    origin: 'https://turma-facil-2-0.vercel.app/',
+    origin: 'https://turma-facil-2-0.vercel.app',
     credentials: true,
   }),
 );
