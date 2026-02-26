@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-
+    "outDir": "dist",
     "target": "esnext", 
-
     /* Modules */
     "module": "esnext",                         
-    "esModuleInterop": true,                           
+    "esModuleInterop": true,                       
     "forceConsistentCasingInFileNames": true,      
     "strict": true,
     "skipLibCheck": true                         
-  }
+  },
+  "include": ["src"]
 }
