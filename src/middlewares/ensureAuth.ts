@@ -4,9 +4,12 @@ import jwt from 'jsonwebtoken';
 
 export function ensureAuth(req: Request, res: Response, next: NextFunction) {
   try {
-    const accessToken = req.cookies.accessToken;
-    if (!accessToken) throw new HandlerError(401, 'Usuário não autorizado.');
-    const decode = jwt.verify(accessToken, process.env.JWT_SECRET_KEY as string);
+    const tokenHeader = req.headers.authorization
+    if(!tokenHeader) throw new HandlerError(401, 'Token não enviado.');
+
+    const token = tokenHeader.split(' ')[1]
+    if (!token) throw new HandlerError(401, 'Token não enviado.');
+    const decode = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
     if (decode) {
       next();
     } else throw new HandlerError(401, 'Usuário não autorizado.');

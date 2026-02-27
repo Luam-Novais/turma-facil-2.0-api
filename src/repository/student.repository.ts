@@ -53,7 +53,6 @@ export class StudentRepository {
     return prisma.subscription.update({
       where: {
         student_id: id,
-        
       },
       data: {
         isActive: true,
@@ -79,6 +78,18 @@ export class StudentRepository {
     return await prisma.student.delete({ where: { id: studentId } });
   }
   async getBySearch(searchName: string) {
-    return await prisma.student.findMany({ where: { name: { contains: searchName, mode: 'insensitive' } }, include: { subscription: {} } });
+    return await prisma.student.findMany({
+      where: { name: { contains: searchName, mode: 'insensitive' } },
+      include: {
+        subscription: {
+          select: {
+            id: true,
+            isActive: true,
+            subscription_type: true,
+            start_date: true,
+          },
+        },
+      },
+    });
   }
 }
